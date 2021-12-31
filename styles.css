@@ -1,0 +1,420 @@
+/* **** Variables **** */
+:root {
+  --primaryColor: #f15025;
+  --mainBlack: #222;
+  --mainWhite: #fff;
+  --offWhite: #f7f7f7;
+  --darkGray: #bfbbbb;
+  --mainTransition: all 0.3s linear;
+  --mainSpacing: 0.2rem;
+}
+
+/* **** Global Styles **** */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Fira Code", monospace;
+  color: var(--mainBlack);
+  background: var(--mainWhite);
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  margin-bottom: 1.25rem;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  margin-bottom: 0;
+}
+
+p {
+  font-weight: 300;
+  font-size: 0.7rem;
+  line-height: 2;
+}
+
+.btn {
+  display: inline-block; /* w/h/m/p */
+  padding: 0.5rem 1rem;
+  text-transform: capitalize;
+  border: 3px solid var(--primaryColor);
+  color: var(--primaryColor);
+  margin: 3rem;
+  transition: var(--mainTransition);
+}
+.btn:hover {
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+}
+
+/* Main Home */
+.main-home {
+  min-height: 100vh;
+  background: linear-gradient(rgba(210, 197, 197, 0.2), rgba(186, 94, 94, 0.2)),
+    url("./images/image-1.jpeg") center / cover;
+  position: relative;
+}
+.main-header {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 2rem;
+  color: #f25124;
+  width: 80vw;
+}
+@media screen and (min-width: 992px) {
+  .main-header {
+    top: 50%;
+    width: 85vw;
+  }
+}
+
+/* **** Main Navbar **** */
+.main-navbar {
+  background: var(--darkGray);
+  padding: 0 2rem;
+}
+.main-navbar li {
+  list-style: none;
+}
+.main-navbar a {
+  text-transform: capitalize;
+  display: block;
+  padding: 1rem 0;
+  color: var(--primaryColor);
+  letter-spacing: var(--mainSpacing);
+  transition: var(--mainTransition);
+}
+.main-navbar a:hover {
+  color: var(--mainBlack);
+}
+
+@media screen and (min-width: 992px) {
+  .main-navbar ul {
+    max-width: 1170px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* justify-items: center; works as well */
+
+    /* border: 1px dashed black; */
+  }
+  .main-navbar a {
+    text-align: center;
+  }
+}
+
+/* **** Hero **** */
+.hero-header {
+  height: 100vh;
+  /* background: var(--primaryColor); */
+  background: linear-gradient(rgba(241, 80, 37, 0.75), rgba(0, 0, 0, 0.75));
+  color: var(--mainWhite);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  /* align-content: center; may be a solution as well */
+}
+/* .hero-banner { */
+/* border: 1px dashed black; */
+/* background: blue; */
+/* text-align: center; */
+/* } */
+.hero-banner p {
+  width: 80%;
+  max-width: 560px;
+  font-size: 1rem;
+}
+@media screen and (max-width: 600px) {
+  .hero-banner {
+    padding: 0 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .hero-header {
+    background: linear-gradient(rgba(241, 80, 37, 0.75), rgba(0, 0, 0, 0.75)),
+      url("./images/image-2.jpeg") center / cover no-repeat fixed;
+  }
+}
+
+/* **** Cards **** */
+.cards {
+  padding: 4rem 0;
+}
+.title {
+  text-align: center;
+}
+.cards-center {
+  width: 80vw;
+  max-width: 1170px;
+  /* border: 1px dashed pink; */
+  margin: 2rem auto;
+}
+.card {
+  border: 1px solid var(--darkGray);
+  margin-bottom: 3rem;
+}
+.card-info {
+  padding: 1rem;
+}
+.card-footer {
+  background: var(--darkGray);
+  padding: 0.5rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+}
+.card-footer span {
+  color: var(--primaryColor);
+}
+
+/* 
+  // One approach is to use media queries to make our three column layout
+  @media screen and (min-width: 768px) {
+    .cards-center {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+    }
+  }
+  @media screen and (min-width: 1170px) {
+    .cards-center {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+*/
+
+/* Solutin to handling different row heights for cards */
+/* Make the card itself display: grid */
+/* VERY IMPORTANT TECHNIQUE - USE 1fr FOR THE MIDDLE ROW */
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+
+/*
+  // Second approach to make three column layout without media queries.
+  (max-width(ie 1170px) - total-gap(ie 2rem)) / number-of-columns
+  (1170px - 64px) / 3 ~ 368.667 (for 3 columns)
+  (1170px - 96px) / 4 = 268.5 (for 4 columns)
+
+  auto-fill - columns continue to be created eventhough we do not have items to fill them.
+*/
+.cards-center {
+  display: grid;
+  column-gap: 2rem;
+  /* For 3 column layout */
+  /* grid-template-columns: repeat(auto-fit, minmax(368px, 1fr)); */
+  /* grid-template-columns: repeat(auto-fill, minmax(368px, 1fr)); */
+
+  /* For 4 column layout */
+  grid-template-columns: repeat(auto-fill, minmax(268.5px, 1fr));
+}
+
+/* **** Tiles **** */
+.tiles {
+  padding: 4rem 0;
+}
+.tiles-center {
+  width: 90vw;
+  max-width: 1170px;
+  margin: 2rem auto;
+  display: grid;
+  row-gap: 2rem;
+}
+@media screen and (min-width: 768px) {
+  .tiles-center {
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .tiles-center {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* 4 columns 5 rows */
+@media screen and (min-width: 1170px) {
+  .tiles-center {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(
+      5,
+      200px
+    ); /* Apply height; Remember this is for the template and not the image */
+    grid-template-areas:
+      "a a a b"
+      "a a a c"
+      "d d d d"
+      "e f f f"
+      "e g h i";
+  }
+  .tiles img {
+    height: 100%;
+    object-fit: cover;
+  }
+  .tiles .tile-1 img {
+    object-position: 0 65%;
+  }
+  .tile-1 {
+    grid-area: d;
+  }
+  .tile-2 {
+    grid-area: b;
+  }
+  .tile-3 {
+    grid-area: c;
+  }
+  .tile-4 {
+    grid-area: a;
+  }
+  .tile-5 {
+    grid-area: e;
+  }
+  .tile-6 {
+    grid-area: f;
+  }
+  .tile-7 {
+    grid-area: g;
+  }
+  .tile-8 {
+    grid-area: h;
+  }
+  .tile-9 {
+    grid-area: i;
+  }
+}
+
+/* **** Layout **** */
+/* General */
+.header {
+  background: var(--primaryColor);
+  color: var(--mainWhite);
+  text-align: center;
+  padding: 0.5rem 0;
+}
+.navbar {
+  background: var(--darkGray);
+}
+.navbar li {
+  list-style: none;
+}
+.navbar a {
+  padding: 1rem;
+  display: inline-block;
+  text-transform: capitalize;
+  letter-spacing: var(--mainSpacing);
+  font-size: 1.2rem;
+  color: var(--mainBlack);
+  transition: var(--mainTransition);
+}
+.navbar a:hover {
+  color: var(--mainWhite);
+}
+.content {
+  padding: 2rem;
+}
+.content p {
+  font-size: 1rem;
+}
+.sidebar {
+  background: var(--primaryColor);
+  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  color: var(--mainWhite);
+  font-size: 1.2rem;
+}
+.sidebar span {
+  transition: var(--mainTransition);
+}
+.sidebar span:hover {
+  color: var(--mainBlack);
+}
+.footer {
+  background: var(--mainBlack);
+  color: var(--mainWhite);
+  text-align: center;
+  text-transform: capitalize;
+  padding: 0.5rem 0;
+}
+.footer p {
+  font-size: 1.2rem;
+}
+.main {
+  min-height: 100vh; /* Key here is to make this the whole page and grid to control layout areas */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto auto; /* Set up so content section takes up all the available space */
+}
+@media screen and (min-width: 768px) {
+  .navbar ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+  }
+}
+/* Large Screen - Grid Lines - 3rows 3 columns  */
+@media screen and (min-width: 992px) {
+  .main {
+    grid-template-columns: [start] 200px [col-1-end] 1fr [col-2-end] 50px [end];
+    grid-template-rows: [start] auto [row-1-end] 1fr [row-2-end] auto [end];
+  }
+  .header {
+    grid-column: start/end;
+    grid-row: start/row-1-end;
+  }
+  .navbar {
+    grid-column: start/col-1-end;
+    grid-row: row-1-end/row-2-end;
+  }
+  .content {
+    grid-column: col-1-end/col-2-end;
+    grid-row: row-1-end/row-2-end;
+  }
+  .sidebar {
+    grid-column: col-2-end/end;
+    grid-row: row-1-end/row-2-end;
+  }
+  .footer {
+    /* grid-column: start/end; */
+    /* grid-row: row-2-end/end; */
+    /* grid-row-start / grid-column-start / grid-row-end / grid-column-end | itemname; */
+    grid-area: row-2-end/start/end/end;
+  }
+  .navbar ul {
+    grid-template-columns: 1fr;
+    align-items: center;
+    min-height: 100%;
+  }
+  .sidebar {
+    grid-template-columns: 1fr;
+    align-items: center;
+    /* min-height: 100%; */
+    padding: 0 0;
+    background: var(--darkGray);
+  }
+}
